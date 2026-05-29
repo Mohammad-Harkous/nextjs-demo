@@ -1,9 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getAllAuthors, getBooksByAuthorId } from '@/lib/data';
+import Pagination from '@/components/Pagination';
 
-export default function AuthorsPage() {
-  const authors = getAllAuthors();
+const PAGE_SIZE = 4;
+
+export default async function AuthorsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  const { page } = await searchParams;
+  const currentPage = Number(page ?? 1);
+  const allAuthors = getAllAuthors();
+  const totalPages = Math.ceil(allAuthors.length / PAGE_SIZE);
+  const authors = allAuthors.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -58,6 +65,8 @@ export default function AuthorsPage() {
           );
         })}
       </div>
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 }
