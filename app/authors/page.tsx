@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getAllAuthors, getBooksByAuthorId } from '@/lib/data';
+import { delay } from '@/lib/delay';
 import Pagination from '@/components/Pagination';
 
 const PAGE_SIZE = 4;
 
 export default async function AuthorsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  await delay(800);
   const { page } = await searchParams;
   const currentPage = Number(page ?? 1);
   const allAuthors = getAllAuthors();

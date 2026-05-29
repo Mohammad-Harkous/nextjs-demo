@@ -1,7 +1,9 @@
 import { getAllBooks, getAllAuthors } from '@/lib/data';
+import { delay } from '@/lib/delay';
 import BooksClient from '@/components/BooksClient';
 
-export default function BooksPage() {
+export default async function BooksPage() {
+  await delay(800);
   const books = getAllBooks();
   const authors = getAllAuthors();
 
