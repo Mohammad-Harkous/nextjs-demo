@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import SearchBar from './SearchBar';
@@ -13,7 +14,19 @@ interface BooksClientProps {
 
 export default function BooksClient({ initialBooks, authors }: BooksClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState<string>('all');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const selectedGenre = searchParams.get('genre') ?? 'all';
+
+  function handleGenreChange(genre: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (genre === 'all') {
+      params.delete('genre');
+    } else {
+      params.set('genre', genre);
+    }
+    router.push(`/books?${params.toString()}`);
+  }
 
   // Get unique genres
   const genres = useMemo(() => {
@@ -48,7 +61,7 @@ export default function BooksClient({ initialBooks, authors }: BooksClientProps)
           {genres.map((genre) => (
             <button
               key={genre}
-              onClick={() => setSelectedGenre(genre)}
+              onClick={() => handleGenreChange(genre)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedGenre === genre
                   ? 'bg-zinc-900 dark:bg-zinc-50 text-white dark:text-zinc-900'
