@@ -10,10 +10,19 @@ export interface Author {
   imageUrl: string;
 }
 
+export interface Publisher {
+  id: number;
+  name: string;
+  country: string;
+  foundedYear: number;
+  description: string;
+}
+
 export interface Book {
   id: number;
   title: string;
   authorId: number;
+  publisherId: number;
   publishedYear: number;
   genre: string;
   description: string;
@@ -70,11 +79,43 @@ export const authors: Author[] = [
   },
 ];
 
+export const publishers: Publisher[] = [
+  {
+    id: 1,
+    name: "Penguin Books",
+    country: "United Kingdom",
+    foundedYear: 1935,
+    description: "Penguin Books is a British publishing house. It was co-founded in 1935 by Allen Lane and is now an imprint of Penguin Random House.",
+  },
+  {
+    id: 2,
+    name: "HarperCollins",
+    country: "United States",
+    foundedYear: 1989,
+    description: "HarperCollins Publishers is one of the world's largest publishing companies and is one of the Big Five English-language publishing companies.",
+  },
+  {
+    id: 3,
+    name: "Scribner",
+    country: "United States",
+    foundedYear: 1846,
+    description: "Scribner is an American publisher based in New York City, known for publishing classic American literature and fiction.",
+  },
+  {
+    id: 4,
+    name: "Harcourt",
+    country: "United States",
+    foundedYear: 1919,
+    description: "Harcourt was a major American publishing company that published many significant works of modernist literature in the 20th century.",
+  },
+];
+
 export const books: Book[] = [
   {
     id: 1,
     title: "Pride and Prejudice",
     authorId: 1,
+    publisherId: 1,
     publishedYear: 1813,
     genre: "Romance",
     description:
@@ -88,6 +129,7 @@ export const books: Book[] = [
     id: 2,
     title: "Emma",
     authorId: 1,
+    publisherId: 1,
     publishedYear: 1815,
     genre: "Romance",
     description:
@@ -101,6 +143,7 @@ export const books: Book[] = [
     id: 3,
     title: "1984",
     authorId: 2,
+    publisherId: 1,
     publishedYear: 1949,
     genre: "Dystopian Fiction",
     description:
@@ -114,6 +157,7 @@ export const books: Book[] = [
     id: 4,
     title: "Animal Farm",
     authorId: 2,
+    publisherId: 1,
     publishedYear: 1945,
     genre: "Political Satire",
     description:
@@ -127,6 +171,7 @@ export const books: Book[] = [
     id: 5,
     title: "Murder on the Orient Express",
     authorId: 3,
+    publisherId: 2,
     publishedYear: 1934,
     genre: "Mystery",
     description:
@@ -140,6 +185,7 @@ export const books: Book[] = [
     id: 6,
     title: "And Then There Were None",
     authorId: 3,
+    publisherId: 2,
     publishedYear: 1939,
     genre: "Mystery",
     description:
@@ -153,6 +199,7 @@ export const books: Book[] = [
     id: 7,
     title: "The Old Man and the Sea",
     authorId: 4,
+    publisherId: 3,
     publishedYear: 1952,
     genre: "Literary Fiction",
     description:
@@ -166,6 +213,7 @@ export const books: Book[] = [
     id: 8,
     title: "A Farewell to Arms",
     authorId: 4,
+    publisherId: 3,
     publishedYear: 1929,
     genre: "War Novel",
     description:
@@ -179,6 +227,7 @@ export const books: Book[] = [
     id: 9,
     title: "Mrs Dalloway",
     authorId: 5,
+    publisherId: 4,
     publishedYear: 1925,
     genre: "Modernist Literature",
     description:
@@ -192,6 +241,7 @@ export const books: Book[] = [
     id: 10,
     title: "To the Lighthouse",
     authorId: 5,
+    publisherId: 4,
     publishedYear: 1927,
     genre: "Modernist Literature",
     description:
@@ -216,10 +266,22 @@ export function getBooksByAuthorId(authorId: number): Book[] {
   return books.filter((book) => book.authorId === authorId);
 }
 
+export function getPublisherById(id: number): Publisher | undefined {
+  return publishers.find((publisher) => publisher.id === id);
+}
+
+export function getBooksByPublisherId(publisherId: number): Book[] {
+  return books.filter((book) => book.publisherId === publisherId);
+}
+
 export function getAllAuthors(): Author[] {
   return authors;
 }
 
 export function getAllBooks(): Book[] {
   return books;
+}
+
+export function getAllPublishers(): Publisher[] {
+  return publishers;
 }
