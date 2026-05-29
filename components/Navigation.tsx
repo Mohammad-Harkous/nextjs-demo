@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import { getSession } from '@/lib/auth';
+import LogoutButton from './LogoutButton';
 
-export default function Navigation() {
+export default async function Navigation() {
+  const isAuthenticated = await getSession();
+
   return (
     <nav className="bg-zinc-900 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,31 +14,20 @@ export default function Navigation() {
               📚 BookHub
             </Link>
           </div>
-          <div className="flex space-x-8">
-            <Link 
-              href="/" 
-              className="hover:text-zinc-300 transition-colors font-medium"
-            >
+          <div className="flex items-center space-x-8">
+            <Link href="/" className="hover:text-zinc-300 transition-colors font-medium">
               Home
             </Link>
-            <Link 
-              href="/books" 
-              className="hover:text-zinc-300 transition-colors font-medium"
-            >
+            <Link href="/books" className="hover:text-zinc-300 transition-colors font-medium">
               Books
             </Link>
-            <Link
-              href="/authors"
-              className="hover:text-zinc-300 transition-colors font-medium"
-            >
+            <Link href="/authors" className="hover:text-zinc-300 transition-colors font-medium">
               Authors
             </Link>
-            <Link
-              href="/publishers"
-              className="hover:text-zinc-300 transition-colors font-medium"
-            >
+            <Link href="/publishers" className="hover:text-zinc-300 transition-colors font-medium">
               Publishers
             </Link>
+            {isAuthenticated && <LogoutButton />}
           </div>
         </div>
       </div>
